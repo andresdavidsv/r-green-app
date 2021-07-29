@@ -12,12 +12,25 @@ import {
 } from 'native-base';
 import {useNavigation} from "@react-navigation/native";
 
+//api
+import rgreenApi from '../../api/rgreenAPI';
+
 //styles
 import globalStyles from '../../styles/global';
 import styles from './styles';
 
 const Login = () => {
   const navigation = useNavigation();
+
+  const signIn = async () => {
+    try {
+      const res = await rgreenApi.post('/users', {email, password});
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Container style={[globalStyles.container, styles.container]}>
       <View style={globalStyles.content}>

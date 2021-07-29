@@ -13,23 +13,23 @@ import SignUp from './src/Views/SignUp';
 const App = () => {
   return (
     <>
-      {/* <Root> */}
-      <StatusBar />
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{title: 'Login', headerShown: false}}
-          />
-          <Stack.Screen
-            name="SignUp"
-            component={SignUp}
-            options={{title: 'Sign Up'}}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-      {/* </Root> */}
+      <Root>
+        <StatusBar />
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{title: 'Login', headerShown: false}}
+            />
+            <Stack.Screen
+              name="SignUp"
+              component={SignUp}
+              options={{title: 'Sign Up'}}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Root>
     </>
   );
 };
