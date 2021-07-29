@@ -94,27 +94,35 @@ const SignUp = () => {
           <Item inlineLabel last style={globalStyles.input}>
             <Input
               placeholder="Name"
+              autoCapitalize="none"
               onChangeText={text => setFirstName(text)}
             />
           </Item>
           <Item inlineLabel last style={globalStyles.input}>
             <Input
               placeholder="Last Name"
+              autoCapitalize="none"
               onChangeText={text => setLastName(text)}
             />
           </Item>
           <Item inlineLabel last style={globalStyles.input}>
             <Input
               placeholder="Username"
+              autoCapitalize="none"
               onChangeText={text => setUserName(text)}
             />
           </Item>
           <Item inlineLabel last style={globalStyles.input}>
-            <Input placeholder="Email" onChangeText={text => setEmail(text)} />
+            <Input
+              placeholder="Email"
+              autoCapitalize="none"
+              onChangeText={text => setEmail(text)}
+            />
           </Item>
           <Item inlineLabel last style={globalStyles.input}>
             <Input
               secureTextEntry={true}
+              autoCapitalize="none"
               placeholder="Password"
               onChangeText={text => setPassword(text)}
             />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View} from 'react-native';
 import {
   Container,
@@ -10,25 +10,69 @@ import {
   Item,
   Toast,
 } from 'native-base';
-import {useNavigation} from "@react-navigation/native";
-
-//api
-import rgreenApi from '../../api/rgreenAPI';
+import {useNavigation} from '@react-navigation/native';
+import { AsyncStorage } from '@react-native-community/async-storage';
 
 //styles
 import globalStyles from '../../styles/global';
 import styles from './styles';
 
+//Apollo
+import {gql, useMutation} from '@apollo/client';
+
+// Apollo Mutations
+const AUTHENTICATE_USER = gql`
+  mutation authenticateUser($user: AuthenticateInput!) {
+    authenticateUser(user: $user) {
+      token
+    }
+  }
+`;
+
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState(null);
+
   const navigation = useNavigation();
 
-  const signIn = async () => {
-    try {
-      const res = await rgreenApi.post('/users', {email, password});
-      console.log(res.data);
-    } catch (error) {
-      console.log(error);
+  // Apollo Mutation
+  const [authenticateUser] = useMutation(AUTHENTICATE_USER);
+
+  const handleSubmit = async () => {
+    //Validate
+    if (email === '' || password === '') {
+      setMessage('All field are required');
+      return;
     }
+
+    //Save
+    try {
+      const {data} = await authenticateUser({
+        variables: {
+          user: {
+            email,
+            password,
+          },
+        },
+      });
+      const {token} = data.authenticateUser;
+      // Save Token at Storage
+      await AsyncStorage.setItem('token', token);
+
+      //navigation.navigate('Materials');
+    } catch (error) {
+      setMessage(error.message);
+    }
+  };
+
+  //Show message
+  const showAlert = () => {
+    Toast.show({
+      text: message,
+      buttonText: 'Ok',
+      duration: 5000,
+    });
   };
 
   return (
@@ -37,13 +81,26 @@ const Login = () => {
         <H1 style={globalStyles.title}>R GREEN</H1>
         <Form>
           <Item inlineLabel last style={globalStyles.input}>
-            <Input placeholder="Email" />
+            <Input
+              placeholder="Email"
+              autoCapitalize="none"
+              onChangeText={text => setEmail(text)}
+            />
           </Item>
           <Item inlineLabel last style={globalStyles.input}>
-            <Input secureTextEntry={true} placeholder="Password" />
+            <Input
+              secureTextEntry={true}
+              placeholder="Password"
+              autoCapitalize="none"
+              onChangeText={text => setPassword(text)}
+            />
           </Item>
         </Form>
-        <Button square block style={globalStyles.button}>
+        <Button
+          square
+          block
+          style={globalStyles.button}
+          onPress={() => handleSubmit()}>
           <Text tyle={globalStyles.buttonTxt}>Login</Text>
         </Button>
         <Text
@@ -51,6 +108,7 @@ const Login = () => {
           style={globalStyles.hipperText}>
           Sign Up
         </Text>
+        {message && showAlert()}
       </View>
     </Container>
   );
