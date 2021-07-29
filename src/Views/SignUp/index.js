@@ -16,21 +16,35 @@ import {useNavigation} from '@react-navigation/native';
 import globalStyles from '../../styles/global';
 import styles from './styles';
 
+//Apollo
+import {gql, useMutation} from '@apollo/client';
+
+// Apollo Mutations
+const NEW_ACCOUNT = gql`
+  mutation createUser($user: UserInput!) {
+    createUser(user: $user)
+  }
+`;
+
 const SignUp = () => {
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [userName, setUserName] = useState('');
+  const [first_name, setFirstName] = useState('');
+  const [last_name, setLastName] = useState('');
+  const [user_name, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState(null);
 
   const navigation = useNavigation();
+
+  // Apollo Mutation
+  const [createUser] = useMutation(NEW_ACCOUNT);
+
   const handleSubmit = async () => {
     //Validate
     if (
-      name === '' ||
-      lastName === '' ||
-      userName === '' ||
+      first_name === '' ||
+      last_name === '' ||
+      user_name === '' ||
       email === '' ||
       password === ''
     ) {
@@ -44,6 +58,23 @@ const SignUp = () => {
     }
 
     //Save
+    try {
+      const {data} = await createUser({
+        variables: {
+          user: {
+            first_name,
+            last_name,
+            user_name,
+            email,
+            password,
+          },
+        },
+      });
+      setMessage(data.createUser);
+      navigation.navigate('Login');
+    } catch (error) {
+      setMessage(error.message);
+    }
   };
 
   //Show message
@@ -61,7 +92,10 @@ const SignUp = () => {
         <H1 style={globalStyles.title}>R GREEN</H1>
         <Form>
           <Item inlineLabel last style={globalStyles.input}>
-            <Input placeholder="Name" onChangeText={text => setName(text)} />
+            <Input
+              placeholder="Name"
+              onChangeText={text => setFirstName(text)}
+            />
           </Item>
           <Item inlineLabel last style={globalStyles.input}>
             <Input
