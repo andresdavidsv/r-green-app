@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Login from '../Views/Login';
 import SignUp from '../Views/SignUp';
 import UserMaterials from '../Views/UserMaterials';
+import NewUserMaterial from '../Views/NewUserMaterial';
 import Maps from '../Views/Maps';
 import Permissions from '../Views/Permissions';
 import Loading from '../Views/Loading';
@@ -14,9 +15,9 @@ const Stack = createStackNavigator();
 
 const Navigator = () => {
   const {permissions} = useContext(PermissionsContex);
-  if (permissions.locationStatus === 'unavailable') {
-    return <Loading />;
-  }
+  // if (permissions.locationStatus === 'unavailable') {
+  //   return <Loading />;
+  // }
   return (
     <Stack.Navigator>
       {permissions.locationStatus === 'granted' ? (
@@ -38,7 +39,12 @@ const Navigator = () => {
         component={UserMaterials}
         options={{title: 'User Materials'}}
       />
-      <Stack.Screen name="Maps" component={Maps} options={{title: 'Maps'}} />
+      <Stack.Screen
+        name="NewUserMaterial"
+        component={NewUserMaterial}
+        options={{title: 'New User Material'}}
+      />
+      {/* <Stack.Screen name="Maps" component={Maps} options={{title: 'Maps'}} /> */}
     </Stack.Navigator>
   );
 };

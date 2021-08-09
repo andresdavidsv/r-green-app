@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Container, Button, Text, H1} from 'native-base';
+import {Container, Button, Text, H2} from 'native-base';
 //styles
 import globalStyles from '../../styles/global';
 import styles from './styles';
@@ -9,9 +9,9 @@ const Permissions = () => {
   const {permissions, askLocationPermissions} = useContext(PermissionsContex);
   return (
     <Container style={[globalStyles.container, styles.container]}>
-      <H1 style={globalStyles.title}>
+      <H2 style={globalStyles.subtitle}>
         GPS is required to use this application
-      </H1>
+      </H2>
       <Button
         style={[globalStyles.button, styles.button]}
         square
