@@ -19,6 +19,14 @@ const globalStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: colors.white,
   },
+  subtitle: {
+    textAlign: 'center',
+    marginBottom: 20,
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: colors.white,
+    marginTop: 20,
+  },
   input: {
     backgroundColor: colors.white,
     marginBottom: 20,

@@ -3,12 +3,13 @@ import React from 'react';
 import {Root} from 'native-base';
 import {StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-const Stack = createStackNavigator();
+import {PermissionsProvider} from './src/context/PermissionsContex';
 
-//Componentes
-import Login from './src/Views/Login';
-import SignUp from './src/Views/SignUp';
+import Navigator from './src/navigator/Navigator';
+
+const AppState = ({children}) => {
+  return <PermissionsProvider>{children}</PermissionsProvider>;
+};
 
 const App = () => {
   return (
@@ -16,18 +17,9 @@ const App = () => {
       <Root>
         <StatusBar />
         <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{title: 'Login', headerShown: false}}
-            />
-            <Stack.Screen
-              name="SignUp"
-              component={SignUp}
-              options={{title: 'Sign Up'}}
-            />
-          </Stack.Navigator>
+          <AppState>
+            <Navigator />
+          </AppState>
         </NavigationContainer>
       </Root>
     </>
