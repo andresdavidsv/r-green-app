@@ -11,7 +11,7 @@ import {
   Toast,
 } from 'native-base';
 import {useNavigation} from '@react-navigation/native';
-import { AsyncStorage } from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //styles
 import globalStyles from '../../styles/global';
@@ -60,7 +60,7 @@ const Login = () => {
       // Save Token at Storage
       await AsyncStorage.setItem('token', token);
 
-      //navigation.navigate('Materials');
+      navigation.navigate('UserMaterials');
     } catch (error) {
       setMessage(error.message);
     }
