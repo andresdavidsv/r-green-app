@@ -10,6 +10,7 @@ import {
   Input,
   Toast,
 } from 'native-base';
+import {useNavigation} from '@react-navigation/native';
 //styles
 import globalStyles from '../../styles/global';
 import styles from './styles';
@@ -17,18 +18,44 @@ import styles from './styles';
 //Apollo
 import {gql, useMutation} from '@apollo/client';
 
+// Apollo Mutations
+const NEW_MATERIAL = gql`
+  mutation newMaterial($material: MaterialInput) {
+    newMaterial(material: $material)
+  }
+`;
+
 const NewUserMaterials = () => {
   const [nameMaterial, setNameMaterial] = useState('');
   const [weightMaterial, setWeightMaterial] = useState('');
   const [message, setMessage] = useState(null);
 
-  const handleSubmit = () => {
+  const navigation = useNavigation();
+
+  // Apollo Mutation
+  const [newMaterial] = useMutation(NEW_MATERIAL);
+
+  const handleSubmit = async () => {
     //Validate
     if (nameMaterial === '' || weightMaterial === '') {
       setMessage('All field are required');
       return;
     }
-
+    //Save
+    try {
+      const {data} = await newMaterial({
+        variables: {
+          material: {
+            type_name: nameMaterial,
+            weight: weightMaterial,
+          },
+        },
+      });
+      setMessage(data.createUser);
+      navigation.navigate('UserMaterials');
+    } catch (error) {
+      setMessage(error.message);
+    }
   };
 
   //Show message
