@@ -40,12 +40,12 @@ const Login = () => {
   const [authenticateUser] = useMutation(AUTHENTICATE_USER);
 
   const handleSubmit = async () => {
+    setMessage(null);
     //Validate
     if (email === '' || password === '') {
       setMessage('All field are required');
       return;
     }
-
     //Save
     try {
       const {data} = await authenticateUser({
@@ -57,6 +57,7 @@ const Login = () => {
         },
       });
       const {token} = data.authenticateUser;
+
       // Save Token at Storage
       await AsyncStorage.setItem('token', token);
 

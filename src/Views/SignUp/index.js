@@ -40,6 +40,7 @@ const SignUp = () => {
   const [createUser] = useMutation(NEW_ACCOUNT);
 
   const handleSubmit = async () => {
+    setMessage(null);
     //Validate
     if (
       first_name === '' ||
