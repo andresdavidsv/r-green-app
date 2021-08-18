@@ -9,6 +9,7 @@ import NewUserMaterial from '../Views/NewUserMaterial';
 import Maps from '../Views/Maps';
 import Permissions from '../Views/Permissions';
 import Loading from '../Views/Loading';
+import Material from '../Views/Material';
 import {PermissionsContex} from '../context/PermissionsContex';
 
 const Stack = createStackNavigator();
@@ -42,6 +43,11 @@ const Navigator = () => {
       <Stack.Screen
         name="NewUserMaterial"
         component={NewUserMaterial}
+        options={{title: 'New User Material'}}
+      />
+      <Stack.Screen
+        name="Material"
+        component={Material}
         options={{title: 'New User Material'}}
       />
       <Stack.Screen name="Maps" component={Maps} options={{title: 'Maps'}} />

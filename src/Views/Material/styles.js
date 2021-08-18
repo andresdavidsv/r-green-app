@@ -5,12 +5,12 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.primary,
   },
-  button: {
-    marginTop: 30,
-  },
-  content: {
-    backgroundColor: colors.white,
+  form: {
     marginHorizontal: '2.5%',
+    marginTop: 20,
+  },
+  input: {
+    
   },
 });
 
