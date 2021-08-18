@@ -25,6 +25,15 @@ const NEW_MATERIAL = gql`
   }
 `;
 
+// Update Cache
+const GET_MATERIALS = gql`
+  query getUserMaterials {
+    getUserMaterials {
+      materialId
+    }
+  }
+`;
+
 const NewUserMaterials = () => {
   const [nameMaterial, setNameMaterial] = useState('');
   const [weightMaterial, setWeightMaterial] = useState('');
@@ -33,7 +42,16 @@ const NewUserMaterials = () => {
   const navigation = useNavigation();
 
   // Apollo Mutation
-  const [newMaterial] = useMutation(NEW_MATERIAL);
+  const [newMaterial] = useMutation(NEW_MATERIAL, {
+    // eslint-disable-next-line no-shadow
+    update(cache, {data: {newMaterial}}) {
+      const {getUserMaterials} = cache.readQuery({query: GET_MATERIALS});
+      cache.writeQuery({
+        query: GET_MATERIALS,
+        data: {getUserMaterials: getUserMaterials.concat([newMaterial])},
+      });
+    },
+  });
 
   const handleSubmit = async () => {
     //Validate
