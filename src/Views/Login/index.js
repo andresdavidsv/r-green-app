@@ -86,6 +86,7 @@ const Login = () => {
               placeholder="Email"
               autoCapitalize="none"
               onChangeText={text => setEmail(text)}
+              value={email}
             />
           </Item>
           <Item inlineLabel last style={globalStyles.input}>
