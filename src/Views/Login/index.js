@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View} from 'react-native';
 import {
   Container,
@@ -12,6 +12,7 @@ import {
 } from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SplashScreen from 'react-native-splash-screen';
 
 //styles
 import globalStyles from '../../styles/global';
@@ -35,6 +36,10 @@ const Login = () => {
   const [message, setMessage] = useState(null);
 
   const navigation = useNavigation();
+
+  useEffect(() => {
+    SplashScreen.hide();
+  });
 
   // Apollo Mutation
   const [authenticateUser] = useMutation(AUTHENTICATE_USER);
